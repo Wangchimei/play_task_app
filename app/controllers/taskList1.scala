@@ -47,4 +47,8 @@ class taskList1 @Inject()(val controllerComponents: ControllerComponents) extend
       Ok(views.html.taskList1(tasks))
     }.getOrElse(Redirect(routes.taskList1.login()))
   }
+
+  def logout = Action {
+    Redirect(routes.taskList1.login()).withNewSession
+  }
 }

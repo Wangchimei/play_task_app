@@ -1,12 +1,14 @@
 @(tasks:Seq[String])
 
 @main("Task List") {
-<h1>Task List</h1>
-<ul>
-  @for(task <- tasks) {
-  <li>@task</li>
+  <h1>Task List</h1>
+  <ul>
+    @for(task <- tasks) {
+    <li>@task</li>
 
-  }
-</ul>
-
+    }
+  </ul>
+  <div>
+  <a href="@routes.taskList1.logout()">Logout</a>
+  </div>
 }
