@@ -18,8 +18,8 @@ class taskList1 @Inject()(val controllerComponents: ControllerComponents) extend
     postVals.map { args =>
       val username = args("username").head
       val password = args("password").head
-      Ok(s"$username logged in with $password")
-    }.getOrElse(Ok("Oh nooo"))
+      Redirect(routes.taskList1.taskList())
+    }.getOrElse(Redirect(routes.taskList1.login()))
   }
 
   def taskList = Action {

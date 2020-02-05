@@ -3,7 +3,7 @@
 @main("Login") {
   <h2>Login</h2>
 
-  <form method="get" action="validateGet1">
+  <form method="get" action="/validateGet1">
     Username: <input type="text" name="username">
     <br><br>
     Password: <input type="password" name="password">
@@ -11,7 +11,7 @@
     <input type="submit">
   </form>
 
-  <form method="post" action="validatePost1">
+  <form method="post" action="@routes.taskList1.validateLoginPost()">
     Username: <input type="text" name="username">
     <br><br>
     Password: <input type="password" name="password">
