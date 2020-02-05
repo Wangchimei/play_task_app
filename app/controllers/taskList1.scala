@@ -1,6 +1,7 @@
 package controllers
 
 import javax.inject._
+import models.TaskListInMemoryModel
 import play.api.mvc._
 
 @Singleton
@@ -9,21 +10,39 @@ class taskList1 @Inject()(val controllerComponents: ControllerComponents) extend
     Ok(views.html.login1())
   }
 
-  def valdiateLoginGet(username: String, password: String) = Action {
+  def validateLoginGet(username: String, password: String) = Action {
     Ok(s"$username logged in with $password")
   }
 
-  def valdiateLoginPost = Action {  request =>
+  def validateLoginPost = Action {  request =>
     val postVals = request.body.asFormUrlEncoded
     postVals.map { args =>
       val username = args("username").head
       val password = args("password").head
-      Redirect(routes.taskList1.taskList())
+      if (TaskListInMemoryModel.validateUser(username, password)){
+        Redirect(routes.taskList1.taskList())
+      } else {
+        Redirect(routes.taskList1.login())
+      }
+    }.getOrElse(Redirect(routes.taskList1.login()))
+  }
+
+  def createUser = Action {  request =>
+    val postVals = request.body.asFormUrlEncoded
+    postVals.map { args =>
+      val username = args("username").head
+      val password = args("password").head
+      if (TaskListInMemoryModel.createUser(username, password)) {
+        Redirect(routes.taskList1.taskList())
+      } else {
+        Redirect(routes.taskList1.login())
+      }
     }.getOrElse(Redirect(routes.taskList1.login()))
   }
 
   def taskList = Action {
-    val tasks = List("task 1", "task 2", "task 3")
+    val username = "aa"
+    val tasks = TaskListInMemoryModel.getTask(username)
     Ok(views.html.taskList1(tasks))
   }
 }

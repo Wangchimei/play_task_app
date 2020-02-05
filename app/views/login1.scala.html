@@ -4,6 +4,7 @@
   <h2>Login</h2>
 
   <form method="get" action="/validateGet1">
+    <p>Log in with GET</p>
     Username: <input type="text" name="username">
     <br><br>
     Password: <input type="password" name="password">
@@ -12,6 +13,16 @@
   </form>
 
   <form method="post" action="@routes.taskList1.validateLoginPost()">
+    <p>Log in with POST</p>
+    Username: <input type="text" name="username">
+    <br><br>
+    Password: <input type="password" name="password">
+    <br><br>
+    <input type="submit">
+  </form>
+
+  <form method="post" action="@routes.taskList1.createUser()">
+    <p>Sign up with POST</p>
     Username: <input type="text" name="username">
     <br><br>
     Password: <input type="password" name="password">
