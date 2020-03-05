@@ -24,7 +24,7 @@ class taskList1 @Inject()(val controllerComponents: ControllerComponents) extend
       if (TaskListInMemoryModel.validateUser(username, password)){
         Redirect(routes.taskList1.taskList()).withSession("username" -> username)
       } else {
-        Redirect(routes.taskList1.login())
+        Redirect(routes.taskList1.login()).flashing("error" -> "Invalid username/password")
       }
     }.getOrElse(Redirect(routes.taskList1.login()))
   }
@@ -39,7 +39,7 @@ class taskList1 @Inject()(val controllerComponents: ControllerComponents) extend
       } else {
         Redirect(routes.taskList1.login())
       }
-    }.getOrElse(Redirect(routes.taskList1.login()))
+    }.getOrElse(Redirect(routes.taskList1.login())).flashing("error" -> "Existing user")
   }
 
   def taskList = Action {implicit request =>
