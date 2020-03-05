@@ -1,12 +1,37 @@
-@(tasks:Seq[String])(implicit flash: Flash) @main("Task List") {
-<h1>Task List</h1>
-<ul>
-  @for(task <- tasks) {
-  <li>@task</li>
+@(tasks:Seq[String])(implicit request: RequestHeader, flash: Flash) @main("Task List") {
+<div class="container">
+  <dic class="float-right my-2">
+    <a href="@routes.taskList1.logout()" class="btn btn-sm btn-danger"
+      >Logout</a
+    >
+  </dic>
+  <h1 class="my-2">Task List</h1>
+  <ul>
+    @for((task, i) <- tasks.zipWithIndex) {
+      <div class="d-flex justify-content-between">
+        <div>
+          <li class="p-1 my-1">@task</li>
+        </div>
+        <div>
+          <form method="post" action="@routes.taskList1.deleteTask()">
+            @helper.CSRF.formField
+            <input type="hidden" name="index" value="@i">
+            <input type="submit" value="Delete" class="btn btn-sm btn-outline-danger"></input>
+          </form>
+        </div>
+      </div>
+    }
+  </ul>
 
-  }
-</ul>
-<div>
-  <a href="@routes.taskList1.logout()">Logout</a>
+  <form method="post" action="@routes.taskList1.addTask()" class="form-group">
+    @helper.CSRF.formField
+    <div>
+      <label>Enter new Task</label>
+      <input type="text" name="newTask" class="form-control my-2"></input>
+    </div>
+    <div class="text-center">
+      <input type="submit" class="btn btn-sm btn-info my-2"></input>
+    </div>
+  </form>
 </div>
 }

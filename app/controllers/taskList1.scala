@@ -37,9 +37,9 @@ class taskList1 @Inject()(val controllerComponents: ControllerComponents) extend
       if (TaskListInMemoryModel.createUser(username, password)) {
         Redirect(routes.taskList1.taskList()).withSession("username" -> username)
       } else {
-        Redirect(routes.taskList1.login())
+        Redirect(routes.taskList1.login()).flashing("error" -> "Existing user")
       }
-    }.getOrElse(Redirect(routes.taskList1.login())).flashing("error" -> "Existing user")
+    }.getOrElse(Redirect(routes.taskList1.login()))
   }
 
   def taskList = Action {implicit request =>
@@ -47,6 +47,30 @@ class taskList1 @Inject()(val controllerComponents: ControllerComponents) extend
     usernameOption.map { username =>
       val tasks = TaskListInMemoryModel.getTask(username)
       Ok(views.html.taskList1(tasks))
+    }.getOrElse(Redirect(routes.taskList1.login()))
+  }
+
+  def addTask = Action {implicit request =>
+    val usernameOption = request.session.get("username")
+    usernameOption.map { username =>
+      val postVals = request.body.asFormUrlEncoded
+      postVals.map { args =>
+        val task = args("newTask").head
+        TaskListInMemoryModel.addTask(username, task)
+        Redirect(routes.taskList1.taskList()).flashing("success" -> "Task created")
+      }.getOrElse(Redirect(routes.taskList1.taskList()))
+    }.getOrElse(Redirect(routes.taskList1.login()))
+  }
+
+  def deleteTask = Action {implicit request =>
+    val usernameOption = request.session.get("username")
+    usernameOption.map { username =>
+      val postVals = request.body.asFormUrlEncoded
+      postVals.map { args =>
+        val index = args("index").head.toInt
+        TaskListInMemoryModel.removeTask(username, index)
+        Redirect(routes.taskList1.taskList()).flashing("success" -> "Task deleted")
+      }.getOrElse(Redirect(routes.taskList1.taskList()))
     }.getOrElse(Redirect(routes.taskList1.login()))
   }
 

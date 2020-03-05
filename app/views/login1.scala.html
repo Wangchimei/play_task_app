@@ -1,25 +1,63 @@
 @()(implicit request: RequestHeader, flash: Flash) @main("Login") {
-<h2>Login</h2>
 
-<form method="get" action="/validateGet1">
-  <p>Log in with GET</p>
-  Username: <input type="text" name="username" /> <br /><br />
-  Password: <input type="password" name="password" /> <br /><br />
-  <input type="submit" />
-</form>
+<div class="container">
+  <h2 class="my-2">Login</h2>
 
-<form method="post" action="@routes.taskList1.validateLoginPost()">
-  @helper.CSRF.formField
-  <p>Log in with POST</p>
-  Username: <input type="text" name="username" /> <br /><br />
-  Password: <input type="password" name="password" /> <br /><br />
-  <input type="submit" />
-</form>
+  <form method="get" action="/validateGet1" class="form-group my-3">
+    <p>Log in with GET (NOT SECURE, JUST FOR TESTING)</p>
+    <div>
+      <label for="name">Username</label>
+      <input type="text" name="username" class="form-control"></input>
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input type="password" name="password" class="form-control"></input>
+    </div>
+    <div class="text-center">
+      <input type="submit" class="btn btn-sm btn-secondary my-2"></input>
+    </div>
+  </form>
 
-<form method="post" action="@routes.taskList1.createUser()">
-  <p>Sign up with POST</p>
-  Username: <input type="text" name="username" /> <br /><br />
-  Password: <input type="password" name="password" /> <br /><br />
-  <input type="submit" />
-</form>
+  <form
+    method="post"
+    action="@routes.taskList1.validateLoginPost()"
+    class="form-group my-3"
+  >
+    @helper.CSRF.formField
+    <p>Log in with POST</p>
+    <div>
+      <label for="name">Username</label>
+      <input type="text" name="username" class="form-control"></input>
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input type="password" name="password" class="form-control"></input>
+    </div>
+    <div class="text-center">
+      <input type="submit" class="btn btn-sm btn-info my-2"></input>
+    </div>
+  </form>
+
+  <hr class="my-3 text-dark" />
+
+  <form
+    method="post"
+    action="@routes.taskList1.createUser()"
+    class="form-group my-3"
+  >
+    @helper.CSRF.formField
+    <p>Create new user</p>
+    <div>
+      <label for="name">Username</label>
+      <input type="text" name="username" class="form-control"></input>
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input type="password" name="password" class="form-control"></input>
+    </div>
+    <div class="text-center">
+      <input type="submit" class="btn btn-sm btn-info my-2"></input>
+    </div>
+  </form>
+</div>
 }
