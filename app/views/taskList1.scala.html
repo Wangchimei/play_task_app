@@ -1,17 +1,28 @@
 @(tasks:Seq[String])(implicit request: RequestHeader, flash: Flash) @main("Task List") {
 <div class="container">
-  <dic class="float-right my-3">
+  <dic class="float-right my-2">
     <a href="@routes.taskList1.logout()" class="btn btn-sm btn-danger"
       >Logout</a
     >
   </dic>
   <h1 class="my-2">Task List</h1>
   <ul>
-    @for(task <- tasks) {
-    <li class="p-1 my-1">@task</li>
+    @for((task, i) <- tasks.zipWithIndex) {
+      <div class="d-flex justify-content-between">
+        <div>
+          <li class="p-1 my-1">@task</li>
+        </div>
+        <div>
+          <form method="post" action="@routes.taskList1.deleteTask()">
+            @helper.CSRF.formField
+            <input type="hidden" name="index" value="@i">
+            <input type="submit" value="Delete" class="btn btn-sm btn-outline-danger"></input>
+          </form>
+        </div>
+      </div>
     }
   </ul>
-  
+
   <form method="post" action="@routes.taskList1.addTask()" class="form-group">
     @helper.CSRF.formField
     <div>

@@ -59,7 +59,19 @@ class taskList1 @Inject()(val controllerComponents: ControllerComponents) extend
         TaskListInMemoryModel.addTask(username, task)
         Redirect(routes.taskList1.taskList()).flashing("success" -> "Task created")
       }.getOrElse(Redirect(routes.taskList1.taskList()))
-    }.getOrElse(Redirect(routes.taskList1.login())).flashing("error" -> "Please log in.")
+    }.getOrElse(Redirect(routes.taskList1.login()))
+  }
+
+  def deleteTask = Action {implicit request =>
+    val usernameOption = request.session.get("username")
+    usernameOption.map { username =>
+      val postVals = request.body.asFormUrlEncoded
+      postVals.map { args =>
+        val index = args("index").head.toInt
+        TaskListInMemoryModel.removeTask(username, index)
+        Redirect(routes.taskList1.taskList()).flashing("success" -> "Task deleted")
+      }.getOrElse(Redirect(routes.taskList1.taskList()))
+    }.getOrElse(Redirect(routes.taskList1.login()))
   }
 
   def logout = Action {

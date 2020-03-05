@@ -17,6 +17,7 @@ POST    /createUser1                controllers.taskList1.createUser
 
 GET     /taskList1                  controllers.taskList1.taskList
 POST    /addTask1                   controllers.taskList1.addTask
+POST    /deleteTask1                controllers.taskList1.deleteTask
 
 GET     /logout1                    controllers.taskList1.logout
 # Map static resources from the /public folder to the /assets URL path
