@@ -6,6 +6,7 @@ import play.api.mvc._
 
 @Singleton
 class taskList1 @Inject()(val controllerComponents: ControllerComponents) extends BaseController{
+
   def login = Action {implicit request =>
     Ok(views.html.login1())
   }
@@ -15,6 +16,7 @@ class taskList1 @Inject()(val controllerComponents: ControllerComponents) extend
   }
 
   def validateLoginPost = Action {implicit request =>
+    // parse out the encoded value
     val postVals = request.body.asFormUrlEncoded
     postVals.map { args =>
       val username = args("username").head
