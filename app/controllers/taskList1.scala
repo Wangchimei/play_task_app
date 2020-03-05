@@ -37,9 +37,9 @@ class taskList1 @Inject()(val controllerComponents: ControllerComponents) extend
       if (TaskListInMemoryModel.createUser(username, password)) {
         Redirect(routes.taskList1.taskList()).withSession("username" -> username)
       } else {
-        Redirect(routes.taskList1.login())
+        Redirect(routes.taskList1.login()).flashing("error" -> "Existing user")
       }
-    }.getOrElse(Redirect(routes.taskList1.login())).flashing("error" -> "Existing user")
+    }.getOrElse(Redirect(routes.taskList1.login()))
   }
 
   def taskList = Action {implicit request =>

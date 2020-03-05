@@ -1,12 +1,15 @@
 @(tasks:Seq[String])(implicit flash: Flash) @main("Task List") {
-<h1>Task List</h1>
-<ul>
-  @for(task <- tasks) {
-  <li>@task</li>
-
-  }
-</ul>
-<div>
-  <a href="@routes.taskList1.logout()">Logout</a>
+<div class="container">
+  <dic class="float-right my-3">
+    <a href="@routes.taskList1.logout()" class="btn btn-sm btn-danger"
+      >Logout</a
+    >
+  </dic>
+  <h1 class="my-2">Task List</h1>
+  <ul>
+    @for(task <- tasks) {
+    <li class="p-1 my-1">@task</li>
+    }
+  </ul>
 </div>
 }
